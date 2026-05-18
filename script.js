@@ -240,6 +240,7 @@ function loadSidePhotos() {
         leftImg.src = leftPhoto;
         leftImg.style.display = 'block';
         document.querySelector('.left-side .photo-placeholder').style.display = 'none';
+        document.getElementById('leftRemoveBtn').style.display = 'flex';
     }
 
     if (rightPhoto) {
@@ -247,5 +248,21 @@ function loadSidePhotos() {
         rightImg.src = rightPhoto;
         rightImg.style.display = 'block';
         document.querySelector('.right-side .photo-placeholder').style.display = 'none';
+        document.getElementById('rightRemoveBtn').style.display = 'flex';
     }
+}
+
+// Remover foto do lado
+function removePhoto(side) {
+    const photoId = side === 'left' ? 'leftPhoto' : 'rightPhoto';
+    const img = document.getElementById(photoId);
+    const placeholder = document.querySelector(`.${side}-side .photo-placeholder`);
+    const removeBtn = document.getElementById(`${side}RemoveBtn`);
+    
+    img.src = '';
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+    removeBtn.style.display = 'none';
+    
+    localStorage.removeItem(`sidePhoto_${side}`);
 }

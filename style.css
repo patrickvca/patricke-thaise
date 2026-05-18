@@ -170,6 +170,33 @@ body {
     transform: scale(1.15) translateY(-2px);
 }
 
+.remove-photo-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(220, 20, 60, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-md);
+    font-weight: 700;
+    z-index: 10;
+}
+
+.remove-photo-btn:hover {
+    background: var(--accent);
+    transform: scale(1.2);
+    box-shadow: var(--shadow-lg);
+}
+
 .side-photo {
     width: 280px;
     height: 380px;
