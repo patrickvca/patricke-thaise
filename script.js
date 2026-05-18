@@ -1,8 +1,8 @@
-// Datas importantes
+// Datas importantes - formato correto
 const dates = {
-    firstChat: new Date('2024-01-19'), // Primeira conversa
-    firstMeeting: new Date('2024-02-08'), // Primeiro encontro
-    anniversary: new Date('2024-05-19') // Pedido de namoro
+    firstChat: new Date(2024, 0, 19), // Primeira conversa - 19 de janeiro de 2024
+    firstMeeting: new Date(2024, 1, 8), // Primeiro encontro - 8 de fevereiro de 2024
+    anniversary: new Date(2024, 4, 19) // Pedido de namoro - 19 de maio de 2024
 };
 
 // Carregar dados ao abrir a página
@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Função para obter a hora atual em Brasília
 function getCurrentBrasiliaTime() {
-    // Cria uma data no fuso horário de Brasília
+    // Obtém a data atual
+    const now = new Date();
+    
+    // Converte para string no fuso de Brasília
     const formatter = new Intl.DateTimeFormat('pt-BR', {
         timeZone: 'America/Sao_Paulo',
         year: 'numeric',
@@ -30,21 +33,24 @@ function getCurrentBrasiliaTime() {
         hour12: false
     });
     
-    const parts = formatter.formatToParts(new Date());
+    const parts = formatter.formatToParts(now);
     const dateObj = {};
     
     parts.forEach(part => {
         dateObj[part.type] = part.value;
     });
     
-    return new Date(
-        dateObj.year,
+    // Cria uma nova data com os valores de Brasília
+    const brasíliaDate = new Date(
+        parseInt(dateObj.year),
         parseInt(dateObj.month) - 1,
-        dateObj.day,
-        dateObj.hour,
-        dateObj.minute,
-        dateObj.second
+        parseInt(dateObj.day),
+        parseInt(dateObj.hour),
+        parseInt(dateObj.minute),
+        parseInt(dateObj.second)
     );
+    
+    return brasíliaDate;
 }
 
 // Função para calcular dias, horas e minutos
@@ -143,25 +149,32 @@ function addMedia() {
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        const media = {
-            id: Date.now(),
-            data: e.target.result,
-            description: descriptionInput.value.trim(),
-            type: mediaType
-        };
+        try {
+            const media = {
+                id: Date.now(),
+                data: e.target.result,
+                description: descriptionInput.value.trim(),
+                type: mediaType
+            };
 
-        // Salvar no localStorage
-        let medias = JSON.parse(localStorage.getItem('medias')) || [];
-        medias.push(media);
-        localStorage.setItem('medias', JSON.stringify(medias));
+            // Salvar no localStorage
+            let medias = JSON.parse(localStorage.getItem('medias')) || [];
+            medias.push(media);
+            localStorage.setItem('medias', JSON.stringify(medias));
 
-        // Limpar inputs
-        photoInput.value = '';
-        videoInput.value = '';
-        descriptionInput.value = '';
+            // Limpar inputs
+            photoInput.value = '';
+            videoInput.value = '';
+            descriptionInput.value = '';
 
-        // Recarregar galeria
-        loadPhotos();
+            // Recarregar galeria
+            loadPhotos();
+            
+            alert('Mídia adicionada com sucesso!');
+        } catch (error) {
+            console.error('Erro ao salvar mídia:', error);
+            alert('Erro ao salvar a mídia. Tente novamente.');
+        }
     };
 
     reader.readAsDataURL(fileInput.files[0]);
@@ -170,6 +183,11 @@ function addMedia() {
 // Carregar fotos e vídeos da galeria
 function loadPhotos() {
     const gallery = document.getElementById('gallery');
+    if (!gallery) {
+        console.error('Elemento gallery não encontrado!');
+        return;
+    }
+    
     const medias = JSON.parse(localStorage.getItem('medias')) || [];
     // Compatibilidade com dados antigos (fotos antigas)
     const oldPhotos = JSON.parse(localStorage.getItem('photos')) || [];
