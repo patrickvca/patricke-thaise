@@ -16,9 +16,40 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateCounters, 1000); // Atualizar a cada segundo
 });
 
+// Função para obter a hora atual em Brasília
+function getCurrentBrasiliaTime() {
+    // Cria uma data no fuso horário de Brasília
+    const formatter = new Intl.DateTimeFormat('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+    
+    const parts = formatter.formatToParts(new Date());
+    const dateObj = {};
+    
+    parts.forEach(part => {
+        dateObj[part.type] = part.value;
+    });
+    
+    return new Date(
+        dateObj.year,
+        parseInt(dateObj.month) - 1,
+        dateObj.day,
+        dateObj.hour,
+        dateObj.minute,
+        dateObj.second
+    );
+}
+
 // Função para calcular dias, horas e minutos
 function calculateTimeElapsed(startDate) {
-    const today = new Date();
+    const today = getCurrentBrasiliaTime();
     const timeDiff = today - startDate;
     
     const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
