@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrick e Thaise - Memórias</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navegação -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <h1 class="logo">💕 Patrick e Thaise 💕</h1>
+                <div class="nav-buttons">
+                    <button class="nav-btn active" data-tab="home">Home</button>
+                    <button class="nav-btn" data-tab="album">Álbum</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home -->
+        <div id="home" class="tab-content active">
+            <div class="home-container">
+                <!-- Foto Esquerda -->
+                <div class="photo-side left-side">
+                    <div class="photo-placeholder">
+                        <p>Adicione uma foto aqui</p>
+                        <input type="file" id="leftPhotoInput" accept="image/*" hidden>
+                        <button onclick="document.getElementById('leftPhotoInput').click()" class="upload-btn">📸</button>
+                    </div>
+                    <img id="leftPhoto" src="" alt="Foto Esquerda" class="side-photo" style="display: none;">
+                </div>
+
+                <!-- Conteúdo Central -->
+                <div class="home-center">
+                    <div class="welcome-section">
+                        <h2>Bem-vindos!</h2>
+                        <p class="names">Patrick & Thaise</p>
+                        <p class="subtitle">Um quadro das nossas memórias</p>
+                    </div>
+
+                    <div class="counters-section">
+                        <div class="counter-box">
+                            <p class="counter-label">Desde que nos conhecemos</p>
+                            <p class="counter-value" id="counter1">0</p>
+                            <p class="counter-date">19 de janeiro de 2024</p>
+                        </div>
+
+                        <div class="counter-box">
+                            <p class="counter-label">Desde que nos vimos</p>
+                            <p class="counter-value" id="counter2">0</p>
+                            <p class="counter-date">8 de fevereiro de 2024</p>
+                        </div>
+
+                        <div class="counter-box highlight">
+                            <p class="counter-label">Desde que somos namorados</p>
+                            <p class="counter-value" id="counter3">0</p>
+                            <p class="counter-date">19 de maio de 2024</p>
+                        </div>
+                    </div>
+
+                    <button class="album-btn" onclick="switchTab('album')">
+                        Ver Álbum 📷
+                    </button>
+                </div>
+
+                <!-- Foto Direita -->
+                <div class="photo-side right-side">
+                    <div class="photo-placeholder">
+                        <p>Adicione uma foto aqui</p>
+                        <input type="file" id="rightPhotoInput" accept="image/*" hidden>
+                        <button onclick="document.getElementById('rightPhotoInput').click()" class="upload-btn">📸</button>
+                    </div>
+                    <img id="rightPhoto" src="" alt="Foto Direita" class="side-photo" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Álbum -->
+        <div id="album" class="tab-content">
+            <div class="album-container">
+                <h2>Nossos Momentos</h2>
+                
+                <div class="upload-section">
+                    <div class="upload-form">
+                        <div class="media-type-selector">
+                            <label>
+                                <input type="radio" name="mediaType" value="photo" checked> 📷 Foto
+                            </label>
+                            <label>
+                                <input type="radio" name="mediaType" value="video"> 🎥 Vídeo
+                            </label>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" required>
+                        <input type="file" id="videoInput" accept="video/*" style="display: none;">
+                        <textarea id="descriptionInput" placeholder="Descreva esse momento especial..."></textarea>
+                        <button onclick="addMedia()" class="add-btn">Adicionar Mídia</button>
+                    </div>
+                </div>
+
+                <div class="gallery" id="gallery">
+                    <!-- Fotos serão adicionadas aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
